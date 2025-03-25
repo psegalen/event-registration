@@ -1,0 +1,173 @@
+.App {
+  display: flex;
+  height: 100%;
+  background-color: #000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  color: #ffff;
+  padding: 16px;
+}
+form {
+  position: relative;
+}
+
+.logo {
+  width: 200px;
+  object-fit: contain;
+  margin: 8px;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 100%;
+}
+
+.divider {
+  border-color: #1baee7 !important;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.title {
+  margin: 0 !important;
+  text-align: center;
+  font-size: 24px !important;
+  font-family: "Source Code Pro" !important;
+}
+.description {
+  font-size: 20px !important;
+  text-align: justify;
+  padding: 8px;
+}
+
+.error {
+  font-size: 14px !important;
+  text-align: justify;
+  padding: 16px;
+}
+
+.login {
+  color: white;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-label {
+  display: flex;
+  gap: 12px;
+}
+
+.eventList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: 100%;
+}
+
+.events {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 130px;
+  border: 1px solid #1baee7 !important;
+  background: #000 !important;
+  border-radius: 5px;
+  color: #ffff;
+  padding: 8px !important;
+}
+
+.event-card-title {
+  margin: 0 !important;
+  font-family: "Source Code Pro" !important;
+  color: #ffff;
+}
+
+.event-card-img {
+  width: 120px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.event-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.event-details-img {
+  width: 300px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.registrationList {
+}
+
+.registration-item {
+  border: solid 1px #1baee7;
+}
+
+.registration-text {
+  color: #fff;
+}
+.registration-text > p {
+  color: #fff;
+}
+.registration-text > span {
+  margin: 0;
+  font-weight: 800;
+  color: #1baee7;
+}
+
+.registration-item.arrived {
+  background: rgba(255, 255, 255, 0.2);
+}
+.registration-item.notArrived {
+  background: #1baee7;
+}
+.registration-item.notArrived > .registration-text > span {
+  color: #fff;
+}
+
+.checkbox {
+  color: #fff !important;
+}
+
+.checkbox.checked {
+  color: #1baee7 !important;
+}
