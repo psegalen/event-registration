@@ -105,6 +105,14 @@ const Theme = createTheme({
         size: "small",
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        outlined: {
+          borderColor: primaryAccentColor,
+          color: primaryAccentColor,
+        },
+      }
+    }
   },
 });
 

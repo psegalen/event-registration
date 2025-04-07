@@ -1,7 +1,7 @@
 {
   "name": "Event Registration",
   "short_name": "EvReg",
-  "display": "fullscreen",
+  "display": "standalone",
   "start_url": "/?isPwa=true",
   "background_color": "#000000",
   "theme_color": "#1BAEE7",
@@ -33,6 +33,14 @@
           "sizes": "192x192"
         }
       ]
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/?isCsv=true",
+      "accept": {
+        "text/csv": [".csv"]
+      }
     }
   ]
 }

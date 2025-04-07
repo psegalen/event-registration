@@ -11,6 +11,7 @@ export enum PageType {
   RegistrationList,
   CreateRegistration,
   ImportCsv,
+  LaunchWithCsvFile,
 }
 
 export interface PageContextProps {
@@ -28,7 +29,8 @@ export const PageContext = createContext<PageContextProps>({
 });
 
 export const PageProvider: FC<{ children: JSX.Element }> = ({ children }) => {
-  const [pageTodisplay, setPageTodisplay] = useState<PageType>(PageType.Home);
+  const isCsv = window.location.href.includes("?isCsv=true");
+  const [pageTodisplay, setPageTodisplay] = useState<PageType>(isCsv ? PageType.LaunchWithCsvFile : PageType.Home);
   const [eventTodisplay, setEventTodisplay] = useState<EventsRecord | null>(
     null
   );

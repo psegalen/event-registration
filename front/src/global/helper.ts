@@ -15,6 +15,29 @@ export interface CsvData {
   company: string;
 }
 
+export const parseCsvFromText = (text: string): CsvData[] => {
+  const lines = text.split("\r\n");
+  const headers = lines[0].split(",");
+  return lines
+    .slice(1)
+    .map((line) => {
+      const values = line.split(",");
+
+      return {
+        firstname: values[headers.indexOf("firstname")],
+        lastname: values[headers.indexOf("lastname")],
+        company: values[headers.indexOf("company")],
+      };
+    })
+    .filter(
+      (data) =>
+        (data.firstname || data.lastname || data.company) &&
+        data.firstname.length > 0 &&
+        data.lastname.length > 0 &&
+        data.company.length > 0
+    );
+}
+
 export const parseCSV = (
   file: File,
   setMessage: (e: string) => void,
