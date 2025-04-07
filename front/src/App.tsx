@@ -39,6 +39,8 @@ const App: FC = () => {
         return <EventList />;
     }
   };
+  const isPwa = window.location.href.includes("?isPwa=true");
+  const isCsv = window.location.href.includes("?isCsv=true");
   return (
     <div className="App">
       <img
@@ -48,6 +50,9 @@ const App: FC = () => {
         alt="Logo"
       />
       {isAuthenticated ? render() : <Login />}
+      <div style={{color: "#FFFFFF"}}>
+        {isCsv ? "CSV !" : isPwa ? "PWA !" : "Pas une PWA !"}
+      </div>
     </div>
   );
 };
