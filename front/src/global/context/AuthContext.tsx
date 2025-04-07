@@ -18,9 +18,18 @@ export const AuthProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 
   useEffect(() => {
     // Check if user is already authenticated
-    const storedAuth = localStorage.getItem("pocketbase_auth");
+    // Bugfix: pocketbase was inserting the token recursively in an object until the storage is full 
+    const storageAuth = localStorage.getItem("pocketbase_auth");
+    const storedAuth = storageAuth
+      ? storageAuth.includes('token":')
+        ? JSON.parse(storageAuth)
+        : storageAuth
+      : null;
     if (storedAuth) {
-      pb.authStore.save(storedAuth);
+      pb.authStore.clear();
+      pb.authStore.save(
+        typeof storedAuth === "string" ? storedAuth : storedAuth.token
+      );
       setIsAuthenticated(pb.authStore.isValid);
     }
   }, []);
