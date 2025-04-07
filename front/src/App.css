@@ -107,6 +107,7 @@ form {
   border-radius: 5px;
   color: #ffff;
   padding: 8px !important;
+  cursor: pointer;
 }
 
 .event-card-title {
