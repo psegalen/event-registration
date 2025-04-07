@@ -8,13 +8,16 @@ import CustomTextField from "./CustomTextField";
 
 const CreateRegistration: FC = () => {
   const { createRegistration } = useContext(DataContext);
-  const { eventTodisplay, setPageTodisplay } = useContext(PageContext);
+  const { eventTodisplay, setPageTodisplay } =
+    useContext(PageContext);
 
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [company, setCompany] = useState("");
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
     if (!eventTodisplay) return;
 
@@ -54,25 +57,27 @@ const CreateRegistration: FC = () => {
           value={company}
           onChange={(e) => setCompany(e.target.value)}
         />
+        <div className="button-group">
+          <Button
+            variant="outlined"
+            color="warning"
+            onClick={() =>
+              setPageTodisplay(PageType.RegistrationList)
+            }
+            sx={{ marginTop: 2 }}
+          >
+            Annuler
+          </Button>
+          <Button
+            type="submit"
+            variant="outlined"
+            color="success"
+            sx={{ marginTop: 2, marginRight: 2 }}
+          >
+            Enregistrer
+          </Button>
+        </div>
       </form>
-      <div className="button-group">
-        <Button
-          variant="outlined"
-          color="warning"
-          onClick={() => setPageTodisplay(PageType.RegistrationList)}
-          sx={{ marginTop: 2 }}
-        >
-          Annuler
-        </Button>
-        <Button
-          type="submit"
-          variant="outlined"
-          color="success"
-          sx={{ marginTop: 2, marginRight: 2 }}
-        >
-          Enregistrer
-        </Button>
-      </div>
     </div>
   );
 };
