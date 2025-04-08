@@ -40,6 +40,33 @@ const addResourcesToCache = async (resources) => {
       });
     }
   };
+  
+  const networkFirst = async ({ request }) => {
+    // Try to get the resource from the network
+    try {
+      const responseFromNetwork = await fetch(request.clone());
+      // response may be used only once
+      // we need to save clone to put one copy in cache
+      // and serve second one
+      putInCache(request, responseFromNetwork.clone());
+      console.log("SW: NetworkFirst found it on network!", request.url);
+      return responseFromNetwork;
+    } catch (error) {
+      // Next try to get the resource from the cache
+      const responseFromCache = await caches.match(request);
+      if (responseFromCache) {
+        console.log("SW: NetworkFirst found it in cache!", request.url);
+        return responseFromCache;
+      }
+      // when even the fallback response is not available,
+      // there is nothing we can do, but we must always
+      // return a Response object
+      return new Response('Network error happened', {
+        status: 408,
+        headers: { 'Content-Type': 'text/plain' },
+      });
+    }
+  };
   self.addEventListener('install', (event) => {
     event.waitUntil(
       addResourcesToCache([
@@ -59,5 +86,15 @@ const addResourcesToCache = async (resources) => {
           fallbackUrl: '/src/assets/logo512.png',
         })
       );
+    } else {
+      const isApiGet = url.includes("8090/api") && event.request.method === "GET";
+      if (isApiGet) {
+        console.log("SW: API GET!", url, event.request);
+        event.respondWith(
+          networkFirst({
+            request: event.request,
+          })
+        );
+      }
     }
   });
