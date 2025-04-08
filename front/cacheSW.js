@@ -12,6 +12,7 @@ const addResourcesToCache = async (resources) => {
     // First try to get the resource from the cache
     const responseFromCache = await caches.match(request);
     if (responseFromCache) {
+      console.log("SW: CacheFirst found it in cache!", request.url);
       return responseFromCache;
     }
   
@@ -22,10 +23,12 @@ const addResourcesToCache = async (resources) => {
       // we need to save clone to put one copy in cache
       // and serve second one
       putInCache(request, responseFromNetwork.clone());
+      console.log("SW: CacheFirst found it on network!", request.url);
       return responseFromNetwork;
     } catch (error) {
       const fallbackResponse = await caches.match(fallbackUrl);
       if (fallbackResponse) {
+        console.log("SW: CacheFirst is sending fallback!", request.url);
         return fallbackResponse;
       }
       // when even the fallback response is not available,
@@ -47,13 +50,14 @@ const addResourcesToCache = async (resources) => {
     );
   });
   self.addEventListener('fetch', (event) => {
-    console.log("SW: FETCH", event.request.url);
-    /*
-    event.respondWith(
-      cacheFirst({
-        request: event.request,
-        fallbackUrl: '/src/assets/logo512.png',
-      })
-    );
-    */
+    const { url } = event.request;
+    const isImage = url.endsWith(".jpg") || url.endsWith(".jpeg") || url.includes("unsplash");
+    if (isImage) {
+      event.respondWith(
+        cacheFirst({
+          request: event.request,
+          fallbackUrl: '/src/assets/logo512.png',
+        })
+      );
+    }
   });
