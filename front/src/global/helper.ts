@@ -16,7 +16,7 @@ export interface CsvData {
 }
 
 export const parseCsvFromText = (text: string): CsvData[] => {
-  const lines = text.split("\r\n");
+  const lines = text.includes("\r\n") ? text.split("\r\n") : text.split("\n");
   const headers = lines[0].split(",");
   return lines
     .slice(1)
@@ -58,7 +58,7 @@ export const parseCSV = (
         return;
       }
 
-      const lines = rawData.split("\r\n");
+      const lines = rawData.includes("\r\n") ? rawData.split("\r\n") : rawData.split("\n");
       if (lines.length < 2) {
         setMessage("Le fichier CSV est vide ou ne contient que l'en-tête.");
         return;
