@@ -1,6 +1,7 @@
 {
   "name": "Event Registration",
   "short_name": "EvReg",
+  "description": "Déclarez des événements, gérer la liste des inscriptions puis émargez les participants !",
   "display": "standalone",
   "start_url": "/?isPwa=true",
   "background_color": "#000000",
@@ -15,6 +16,41 @@
       "src": "src/assets/logo192.png",
       "type": "image/png",
       "sizes": "192x192"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "src/assets/screen1.png",
+      "sizes": "408x809",
+      "type": "image/png"
+    },
+    {
+      "src": "src/assets/screen2.png",
+      "sizes": "408x728",
+      "type": "image/png"
+    },
+    {
+      "src": "src/assets/screen3.png",
+      "sizes": "408x775",
+      "type": "image/png"
+    },
+    {
+      "src": "src/assets/screenDesktop1.png",
+      "sizes": "1680x1000",
+      "form_factor": "wide",
+      "type": "image/png"
+    },
+    {
+      "src": "src/assets/screenDesktop2.png",
+      "sizes": "1680x1000",
+      "form_factor": "wide",
+      "type": "image/png"
+    },
+    {
+      "src": "src/assets/screenDesktop3.png",
+      "sizes": "1680x1000",
+      "form_factor": "wide",
+      "type": "image/png"
     }
   ],
   "shortcuts": [
