@@ -15,6 +15,50 @@ export interface CsvData {
   company: string;
 }
 
+export const parseCsvText = (text: string): CsvData[] => {
+  const lines = text.includes("\r\n")
+    ? text.split("\r\n")
+    : text.split("\n");
+  if (lines.length < 2) {
+    throw new Error(
+      "Le fichier CSV est vide ou ne contient que l'en-tête."
+    );
+  }
+  const headers = lines[0].split(",");
+
+  if (
+    headers.length !== 3 ||
+    !headers.includes("firstname") ||
+    !headers.includes("lastname") ||
+    !headers.includes("company")
+  ) {
+    throw new Error(
+      "Le format du CSV est incorrect. Assurez-vous qu'il contient les colonnes : firstname, lastname, company"
+    );
+  }
+
+  const parsedData: CsvData[] = lines
+    .slice(1)
+    .map((line) => {
+      const values = line.split(",");
+
+      return {
+        firstname: values[headers.indexOf("firstname")],
+        lastname: values[headers.indexOf("lastname")],
+        company: values[headers.indexOf("company")],
+      };
+    })
+    .filter(
+      (data) =>
+        (data.firstname || data.lastname || data.company) &&
+        data.firstname.length > 0 &&
+        data.lastname.length > 0 &&
+        data.company.length > 0
+    );
+
+  return parsedData;
+};
+
 export const parseCSV = (
   file: File,
   setMessage: (e: string) => void,
@@ -35,55 +79,12 @@ export const parseCSV = (
         return;
       }
 
-      const lines = rawData.includes("\r\n")
-        ? rawData.split("\r\n")
-        : rawData.split("\n");
-      if (lines.length < 2) {
-        setMessage(
-          "Le fichier CSV est vide ou ne contient que l'en-tête."
-        );
-        return;
-      }
-      const headers = lines[0].split(",");
-
-      if (
-        headers.length !== 3 ||
-        !headers.includes("firstname") ||
-        !headers.includes("lastname") ||
-        !headers.includes("company")
-      ) {
-        setMessage(
-          "Le format du CSV est incorrect. Assurez-vous qu'il contient les colonnes : firstname, lastname, company"
-        );
-        return;
-      }
-
-      const parsedData: CsvData[] = lines
-        .slice(1)
-        .map((line) => {
-          const values = line.split(",");
-
-          return {
-            firstname: values[headers.indexOf("firstname")],
-            lastname: values[headers.indexOf("lastname")],
-            company: values[headers.indexOf("company")],
-          };
-        })
-        .filter(
-          (data) =>
-            (data.firstname || data.lastname || data.company) &&
-            data.firstname.length > 0 &&
-            data.lastname.length > 0 &&
-            data.company.length > 0
-        );
-
+      const parsedData = parseCsvText(rawData);
       setParsedData(parsedData);
       setMessage("");
     } catch (error) {
       console.error("Error in parseCSV:", error);
-      setMessage(
-        "An unexpected error occurred while parsing the CSV"
-      );
+      setMessage((error as Error).message);
     }
   };
   reader.readAsText(file);

@@ -1,4 +1,10 @@
-import { FC, useState, FormEvent, useCallback, useContext } from "react";
+import {
+  FC,
+  useState,
+  FormEvent,
+  useCallback,
+  useContext,
+} from "react";
 import "../App.css";
 import {
   Button,
@@ -19,6 +25,41 @@ import { CsvData, parseCSV } from "../global/helper";
 import { DataContext } from "../global/context/DataContext";
 import { PageContext, PageType } from "../global/context/PageContext";
 
+export const CsvDataTable: FC<{ parsedData: CsvData[] }> = ({
+  parsedData,
+}) => (
+  <Box sx={{ mt: 4 }}>
+    <Typography variant="h6" gutterBottom>
+      Aperçu des données ({parsedData.length} entrées)
+    </Typography>
+    <TableContainer component={Paper}>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell>Prénom</TableCell>
+            <TableCell>Nom</TableCell>
+            <TableCell>Entreprise</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {parsedData.slice(0, 5).map((row, index) => (
+            <TableRow key={index}>
+              <TableCell>{row.firstname}</TableCell>
+              <TableCell>{row.lastname}</TableCell>
+              <TableCell>{row.company}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    {parsedData.length > 5 && (
+      <Typography variant="body2" sx={{ mt: 2 }}>
+        ... et {parsedData.length - 5} entrées supplémentaires
+      </Typography>
+    )}
+  </Box>
+);
+
 const DropzoneArea = styled(Box)(({ theme }) => ({
   border: `2px dashed ${theme.palette.primary.main}`,
   borderRadius: theme.shape.borderRadius,
@@ -36,7 +77,8 @@ const ImportCsv: FC = () => {
   const [message, setMessage] = useState<string>("");
   const [parsedData, setParsedData] = useState<CsvData[]>([]);
   const { createRegistration } = useContext(DataContext);
-  const { eventTodisplay, setPageTodisplay } = useContext(PageContext);
+  const { eventTodisplay, setPageTodisplay } =
+    useContext(PageContext);
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
       setFile(acceptedFiles[0]);
@@ -89,36 +131,7 @@ const ImportCsv: FC = () => {
           )}
         </DropzoneArea>
         {parsedData.length > 0 && (
-          <Box sx={{ mt: 4 }}>
-            <Typography variant="h6" gutterBottom>
-              Aperçu des données ({parsedData.length} entrées)
-            </Typography>
-            <TableContainer component={Paper}>
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Prénom</TableCell>
-                    <TableCell>Nom</TableCell>
-                    <TableCell>Entreprise</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {parsedData.slice(0, 5).map((row, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{row.firstname}</TableCell>
-                      <TableCell>{row.lastname}</TableCell>
-                      <TableCell>{row.company}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            {parsedData.length > 5 && (
-              <Typography variant="body2" sx={{ mt: 2 }}>
-                ... et {parsedData.length - 5} entrées supplémentaires
-              </Typography>
-            )}
-          </Box>
+          <CsvDataTable parsedData={parsedData} />
         )}
         <Box sx={{ mt: 2, textAlign: "center" }}>
           <Button
