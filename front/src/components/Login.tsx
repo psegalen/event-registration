@@ -7,8 +7,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login: FC = () => {
   const { login } = useContext(AuthContext);
-  const [email, setEmail] = useState("julien@douze.info");
-  const [password, setPassword] = useState("Douze+Douze");
+  const [email, setEmail] = useState("students@douze.info");
+  const [password, setPassword] = useState("students@douze.info");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
