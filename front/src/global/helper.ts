@@ -35,9 +35,13 @@ export const parseCSV = (
         return;
       }
 
-      const lines = rawData.split("\r\n");
+      const lines = rawData.includes("\r\n")
+        ? rawData.split("\r\n")
+        : rawData.split("\n");
       if (lines.length < 2) {
-        setMessage("Le fichier CSV est vide ou ne contient que l'en-tête.");
+        setMessage(
+          "Le fichier CSV est vide ou ne contient que l'en-tête."
+        );
         return;
       }
       const headers = lines[0].split(",");
@@ -77,7 +81,9 @@ export const parseCSV = (
       setMessage("");
     } catch (error) {
       console.error("Error in parseCSV:", error);
-      setMessage("An unexpected error occurred while parsing the CSV");
+      setMessage(
+        "An unexpected error occurred while parsing the CSV"
+      );
     }
   };
   reader.readAsText(file);
