@@ -16,5 +16,13 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/"
+  "start_url": "/",
+  "file_handlers": [
+    {
+      "action": "/?isCsv=true",
+      "accept": {
+        "text/csv": [".csv"]
+      }
+    }
+  ]
 }

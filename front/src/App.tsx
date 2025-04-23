@@ -12,6 +12,7 @@ import RegistrationList from "./components/RegistrationList";
 import SigninMode from "./components/SigninMode";
 import { AuthContext } from "./global/context/AuthContext";
 import { PageContext, PageType } from "./global/context/PageContext";
+import CsvMode from "./components/CsvMode";
 
 const App: FC = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -35,6 +36,8 @@ const App: FC = () => {
         return <RegistrationList />;
       case PageType.SigninMode:
         return <SigninMode />;
+      case PageType.CsvMode:
+        return <CsvMode />;
       default:
         return <EventList />;
     }

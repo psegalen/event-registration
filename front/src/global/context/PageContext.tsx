@@ -11,6 +11,7 @@ export enum PageType {
   RegistrationList,
   CreateRegistration,
   ImportCsv,
+  CsvMode,
 }
 
 export interface PageContextProps {
@@ -27,11 +28,15 @@ export const PageContext = createContext<PageContextProps>({
   setEventTodisplay: () => {},
 });
 
-export const PageProvider: FC<{ children: JSX.Element }> = ({ children }) => {
-  const [pageTodisplay, setPageTodisplay] = useState<PageType>(PageType.Home);
-  const [eventTodisplay, setEventTodisplay] = useState<EventsRecord | null>(
-    null
+export const PageProvider: FC<{ children: JSX.Element }> = ({
+  children,
+}) => {
+  const isCsvMode = window.location.href.includes("?isCsv=true");
+  const [pageTodisplay, setPageTodisplay] = useState<PageType>(
+    isCsvMode ? PageType.CsvMode : PageType.Home
   );
+  const [eventTodisplay, setEventTodisplay] =
+    useState<EventsRecord | null>(null);
   return (
     <PageContext.Provider
       value={{
