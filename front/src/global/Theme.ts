@@ -105,6 +105,13 @@ const Theme = createTheme({
         size: "small",
       },
     },
+    MuiSelect: {
+      defaultProps: {
+        variant: "outlined",
+        fullWidth: true,
+        size: "small",
+      },
+    },
   },
 });
 
