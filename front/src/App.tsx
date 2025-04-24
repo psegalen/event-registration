@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect } from "react";
 import "./App.css";
 import logo from "./assets/logo.png";
 import CreateEvent from "./components/CreateEvent";
@@ -14,9 +14,35 @@ import { AuthContext } from "./global/context/AuthContext";
 import { PageContext, PageType } from "./global/context/PageContext";
 import CsvMode from "./components/CsvMode";
 
+const registerServiceWorker = async () => {
+  if ("serviceWorker" in navigator) {
+    try {
+      const registration = await navigator.serviceWorker.register(
+        "/cacheSW.js",
+        {
+          scope: "/",
+        }
+      );
+      if (registration.installing) {
+        console.log("Service worker installing");
+      } else if (registration.waiting) {
+        console.log("Service worker installed");
+      } else if (registration.active) {
+        console.log("Service worker active");
+      }
+    } catch (error) {
+      console.error(`Registration failed with ${error}`);
+    }
+  }
+};
+
 const App: FC = () => {
   const { isAuthenticated } = useContext(AuthContext);
   const { pageTodisplay, setPageTodisplay } = useContext(PageContext);
+
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
 
   const render = () => {
     switch (pageTodisplay) {
