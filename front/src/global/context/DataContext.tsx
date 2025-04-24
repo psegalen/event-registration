@@ -1,4 +1,10 @@
-import { createContext, FC, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  FC,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   Collections,
   EventsRecord,
@@ -13,7 +19,9 @@ export interface DataContextProps {
   events: EventsRecord[];
   registrations: RegistrationsRecord[];
   createEvent: (event: EventsRecord) => Promise<boolean>;
-  createRegistration: (registration: RegistrationsRecord) => Promise<boolean>;
+  createRegistration: (
+    registration: RegistrationsRecord
+  ) => Promise<boolean>;
   updateRegistration: (
     registration: Partial<RegistrationsRecord>
   ) => Promise<boolean>;
@@ -27,9 +35,13 @@ export const DataContext = createContext<DataContextProps>({
   updateRegistration: () => Promise.resolve(false),
 });
 
-export const DataProvider: FC<{ children: JSX.Element }> = ({ children }) => {
+export const DataProvider: FC<{ children: JSX.Element }> = ({
+  children,
+}) => {
   const [events, setEvents] = useState<EventsRecord[]>([]);
-  const [registrations, setRegistrations] = useState<RegistrationsRecord[]>([]);
+  const [registrations, setRegistrations] = useState<
+    RegistrationsRecord[]
+  >([]);
   const { isAuthenticated } = useContext(AuthContext);
 
   const getEvents = async () => {
@@ -59,7 +71,9 @@ export const DataProvider: FC<{ children: JSX.Element }> = ({ children }) => {
     }
   };
 
-  const createEvent = async (event: EventsRecord): Promise<boolean> => {
+  const createEvent = async (
+    event: EventsRecord
+  ): Promise<boolean> => {
     try {
       await pb
         .collection(Collections.Events)
@@ -76,7 +90,9 @@ export const DataProvider: FC<{ children: JSX.Element }> = ({ children }) => {
     registration: RegistrationsRecord
   ): Promise<boolean> => {
     try {
-      await pb.collection(Collections.Registrations).create(registration);
+      await pb
+        .collection(Collections.Registrations)
+        .create(registration);
       getRegistrations();
       return true;
     } catch (error) {
@@ -106,6 +122,7 @@ export const DataProvider: FC<{ children: JSX.Element }> = ({ children }) => {
       return true;
     } catch (error) {
       console.error("Error updating registration:", error);
+      alert("Something went wrong!");
       return false;
     }
   };
