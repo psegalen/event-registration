@@ -121,9 +121,17 @@ export const DataProvider: FC<{ children: JSX.Element }> = ({
       );
       return true;
     } catch (error) {
-      console.error("Error updating registration:", error);
-      alert("Something went wrong!");
-      return false;
+      setRegistrations((prev) =>
+        prev.map((r) =>
+          r.id === registration.id ? { ...r, ...registration } : r
+        )
+      );
+      const swRegistration = await navigator.serviceWorker.ready;
+      //@ts-ignore
+      await swRegistration.sync.register(
+        `register|${registration.id}|${registration.arrivedAt}`
+      );
+      return true;
     }
   };
 

@@ -60,3 +60,14 @@ const checkNetworkRequest = async (request) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(checkNetworkRequest(event.request));
 });
+
+const syncRegstration = async (tag) => {
+  const [_, id, arrivedAt] = tag.split("|");
+  console.log("We need to sync", id, arrivedAt);
+};
+
+self.addEventListener("sync", (event) => {
+  if (event.tag.startsWith("register|")) {
+    event.waitUntil(syncRegstration(event.tag));
+  }
+});
