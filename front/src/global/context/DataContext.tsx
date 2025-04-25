@@ -126,10 +126,13 @@ export const DataProvider: FC<{ children: JSX.Element }> = ({
           r.id === registration.id ? { ...r, ...registration } : r
         )
       );
+      const eventId = registrations.find(
+        (r) => r.id === registration.id
+      )?.eventId;
       const swRegistration = await navigator.serviceWorker.ready;
       //@ts-ignore
       await swRegistration.sync.register(
-        `register|${registration.id}|${registration.arrivedAt}`
+        `register|${registration.id}|${registration.arrivedAt}|${eventId}`
       );
       const notif = new Notification(
         "Votre émargement sera pris en compte au retour du réseau"

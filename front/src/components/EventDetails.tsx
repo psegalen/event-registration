@@ -2,19 +2,32 @@ import { Button, Typography } from "@mui/material";
 import { FC, useContext } from "react";
 import { PageContext, PageType } from "../global/context/PageContext";
 import "../App.css";
+import { DataContext } from "../global/context/DataContext";
 
 const EventDetails: FC = () => {
-  const { setPageTodisplay, eventTodisplay, setEventTodisplay } =
-    useContext(PageContext);
+  const {
+    setPageTodisplay,
+    eventTodisplay,
+    setEventTodisplay,
+    navEventId,
+  } = useContext(PageContext);
+  const { events } = useContext(DataContext);
+  const finalEvent =
+    navEventId.length > 0
+      ? events.find((e) => e.id === navEventId)
+      : eventTodisplay;
   return (
     <div className="container">
       <div className="event-details-container">
         <Typography variant="h1" className="title">
-          {eventTodisplay?.title}
+          {finalEvent?.title}
         </Typography>
-        <img className="event-details-img" src={eventTodisplay?.picture} />
+        <img
+          className="event-details-img"
+          src={finalEvent?.picture}
+        />
         <Typography className="event-details-description">
-          {eventTodisplay?.description}
+          {finalEvent?.description}
         </Typography>
       </div>
       <div className="button-container">

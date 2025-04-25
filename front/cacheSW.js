@@ -62,12 +62,32 @@ self.addEventListener("fetch", (event) => {
 });
 
 const syncRegstration = async (tag) => {
-  const [_, id, arrivedAt] = tag.split("|");
-  console.log("We need to sync", id, arrivedAt);
+  const [_, id, arrivedAt, eventId] = tag.split("|");
+  console.log("We need to sync", id, arrivedAt, eventId);
+  await self.registration.showNotification(
+    "Votre émargement en attente a bien été synchronisé",
+    {
+      body: `Le participant n°${id} à l'évènement n°${eventId} est arrivé à ${arrivedAt}`,
+      tag,
+    }
+  );
 };
 
 self.addEventListener("sync", (event) => {
   if (event.tag.startsWith("register|")) {
     event.waitUntil(syncRegstration(event.tag));
+  }
+});
+
+self.addEventListener("notificationclick", (event) => {
+  console.log(">>> NOTIFICATION CLICKED", event);
+  if (event.notification.tag) {
+    const [_, __, ___, eventId] = event.notification.tag.split("|");
+    console.log(">>> WE SHOULD OPEN EVENT", eventId);
+    event.notification.close();
+
+    // This looks to see if the current is already open and
+    // focuses if it is
+    event.waitUntil(clients.openWindow(`/?eventId=${eventId}`));
   }
 });
