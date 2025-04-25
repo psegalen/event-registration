@@ -131,6 +131,10 @@ export const DataProvider: FC<{ children: JSX.Element }> = ({
       await swRegistration.sync.register(
         `register|${registration.id}|${registration.arrivedAt}`
       );
+      const notif = new Notification(
+        "Votre émargement sera pris en compte au retour du réseau"
+      );
+      console.log("Notif", notif);
       return true;
     }
   };

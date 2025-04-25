@@ -42,6 +42,9 @@ const App: FC = () => {
 
   useEffect(() => {
     registerServiceWorker();
+    Notification.requestPermission().then((response) =>
+      console.log("Notification permission response", response)
+    );
   }, []);
 
   const render = () => {
