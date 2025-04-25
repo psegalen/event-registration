@@ -24,5 +24,47 @@
         "text/csv": [".csv"]
       }
     }
+  ],
+  "description": "Il s'agit d'une application permettant de gérer la présence de participants à des évènements.",
+  "screenshots": [
+    {
+      "src": "src/assets/screen_desktop_1.png",
+      "sizes": "1680x1010",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Page d'accueil"
+    },
+    {
+      "src": "src/assets/screen_desktop_2.png",
+      "sizes": "1680x1010",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Détails d'un évènement"
+    },
+    {
+      "src": "src/assets/screen_desktop_3.png",
+      "sizes": "1680x1010",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Mode émargement"
+    },
+    {
+      "src": "src/assets/screen_desktop_1.png",
+      "sizes": "1680x1010",
+      "type": "image/png",
+      "label": "Page d'accueil"
+    },
+    {
+      "src": "src/assets/screen_desktop_2.png",
+      "sizes": "1680x1010",
+      "type": "image/png",
+      "label": "Détails d'un évènement"
+    },
+    {
+      "src": "src/assets/screen_desktop_3.png",
+      "sizes": "1680x1010",
+      "type": "image/png",
+      "label": "Mode émargement"
+    }
   ]
 }
